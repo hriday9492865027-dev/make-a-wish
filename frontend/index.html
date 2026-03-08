@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="fireworksCanvas"></canvas>
+    <canvas id="confettiCanvas"></canvas>
+
+    <div class="intro-overlay" id="introOverlay">
+        <h1 class="intro-title">
+            <div class="cinematic-msg">HAPPY NEW YEAR</div>
+            <div class="cinematic-name">DHATRI</div>
+        </h1>
+    </div>
+
+    <div class="main-container" id="mainContent">
+        <div class="content-wrapper">
+            <h1 class="title">
+                <div class="cinematic-msg">HAPPY NEW YEAR</div>
+                <div class="cinematic-name">ROHIT SIR</div>
+            </h1>
+
+            <p class="subtitle">May your year be full of light, laughter, and endless possibilities.</p>
+
+            <div class="interactive-grid">
+                <button class="magic-btn" id="btnFireworks">
+                    <span class="btn-icon">🎆</span>
+                    <span class="btn-text">Ignite Magic</span>
+                    <div class="btn-glow"></div>
+                </button>
+
+                <button class="magic-btn" id="btnWish">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">Make a Wish</span>
+                    <div class="btn-glow"></div>
+                </button>
+
+                <button class="magic-btn" id="btnSurprise">
+                    <span class="btn-icon">🎁</span>
+                    <span class="btn-text">Surprise Me</span>
+                    <div class="btn-glow"></div>
+                </button>
+
+                <button class="magic-btn" id="btnWriteWish">
+                    <span class="btn-icon">🖊️</span>
+                    <span class="btn-text">Cast A Wish</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Showing Prophecy -->
+    <div id="wishModal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <button class="close-modal">&times;</button>
+            <div class="modal-body">
+                <div class="wish-icon">🌟</div>
+                <h2 id="wishTitle">Your 2026 Prophecy</h2>
+                <p id="wishText">Loading magic...</p>
+                <button class="action-btn" id="newWishBtn">Another Prophecy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Writing Wish -->
+    <div id="writeWishModal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <button class="close-modal" id="closeWriteModal">&times;</button>
+            <div class="modal-body">
+                <div class="wish-icon">🌠</div>
+                <h2>Cast Your Wish</h2>
+                <textarea id="userWishInput" placeholder="Type your wish for 2026 here..." maxlength="100"></textarea>
+                <button class="action-btn" id="submitWishBtn">Send to Stars</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
