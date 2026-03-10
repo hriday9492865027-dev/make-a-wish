@@ -58,6 +58,17 @@ app.get('/api/wishes', async (req, res) => {
 });
 
 
+// API endpoint to delete all wishes (admin reset)
+app.delete('/api/wishes', async (req, res) => {
+    try {
+        await db.query('DELETE FROM wishes');
+        res.json({ message: 'All wishes reset successfully' });
+    } catch(err) {
+        console.error('Error deleting wishes:', err.message);
+        res.status(500).json({ error: 'Server error while deleting wishes' });
+    }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

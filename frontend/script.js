@@ -436,10 +436,29 @@ document.addEventListener('click', async (e) => {
         titleClicks++;
         nameClicks = 0; // Reset other counter
         if (titleClicks === 5) {
-            if (confirm("⚠️ SECRET ADMIN RESET\n\nAre you sure you want to DELETE the saved wish and reset the feature?")) {
-                localStorage.removeItem('wishCast_2026');
-                localStorage.removeItem('wishContent_2026');
-                location.reload();
+            if (confirm("⚠️ SECRET ADMIN RESET\n\nAre you sure you want to DELETE all saved wishes and unlock the feature?")) {
+                fetch('https://make-a-wish-86cz.onrender.com/api/wishes', { method: 'DELETE' })
+                    .then(res => {
+                        if (res.ok) {
+                            localStorage.removeItem('wishCast_2026');
+                            localStorage.removeItem('wishContent_2026');
+                            
+                            // Immediately reset button visually without needing a full reload
+                            const btnIcon = btnWriteWish.querySelector('.btn-icon');
+                            const btnText = btnWriteWish.querySelector('.btn-text');
+                            btnIcon.textContent = '🖊️';
+                            btnText.textContent = 'Cast A Wish';
+                            btnWriteWish.style.opacity = '1';
+
+                            alert("Reset successful. The wish feature is unlocked.");
+                        } else {
+                            alert("Failed to reset database wishes.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Network Error', err);
+                        alert("Network error: Could not reach server to reset.");
+                    });
             }
             titleClicks = 0;
         }
