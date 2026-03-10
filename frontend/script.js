@@ -333,15 +333,15 @@ const userWishInput = document.getElementById('userWishInput');
 const btnWriteWish = document.getElementById('btnWriteWish');
 
 // Check if wish already cast
+// Check if ANY wish exists in the database
 const checkWishStatus = async () => {
     try {
         const response = await fetch('https://make-a-wish-86cz.onrender.com/api/wishes');
         const wishes = await response.json();
-        // Assuming we check by a dummy username for now since there's no login
-        const myWish = wishes.find(w => w.user_name === 'guest_user');
-        if (myWish) {
+        if (wishes && wishes.length > 0) {
             disableWishFeature();
-            localStorage.setItem('wishContent_2026', myWish.wish_text);
+        } else {
+            enableWishFeature();
         }
     } catch(err) {
         console.error('Error fetching wish status:', err);
@@ -350,8 +350,8 @@ const checkWishStatus = async () => {
 checkWishStatus();
 
 document.getElementById('btnWriteWish').addEventListener('click', () => {
-    if (localStorage.getItem('wishCast_2026') || document.getElementById('btnWriteWish').style.opacity === '0.7') {
-        alert("You have already cast your special wish for 2026! 🌟");
+    if (document.getElementById('btnWriteWish').style.opacity === '0.7') {
+        alert("A wish has already been cast for 2026! 🌟");
         return;
     }
     writeModal.classList.add('active');
@@ -386,9 +386,7 @@ submitWishBtn.addEventListener('click', async () => {
                 userWishInput.value = '';
                 writeModal.classList.remove('active');
 
-                // Save state
-                localStorage.setItem('wishCast_2026', 'true');
-                localStorage.setItem('wishContent_2026', text); // SAVE THE CONTENT
+                // Disable feature now that a wish is in the DB
                 disableWishFeature();
             } else {
                 console.error('Failed to create wish on server');
@@ -440,17 +438,8 @@ document.addEventListener('click', async (e) => {
                 fetch('https://make-a-wish-86cz.onrender.com/api/wishes', { method: 'DELETE' })
                     .then(res => {
                         if (res.ok) {
-                            localStorage.removeItem('wishCast_2026');
-                            localStorage.removeItem('wishContent_2026');
-                            
-                            // Immediately reset button visually without needing a full reload
-                            const btnIcon = btnWriteWish.querySelector('.btn-icon');
-                            const btnText = btnWriteWish.querySelector('.btn-text');
-                            btnIcon.textContent = '🖊️';
-                            btnText.textContent = 'Cast A Wish';
-                            btnWriteWish.style.opacity = '1';
-
-                            alert("Reset successful. The wish feature is unlocked.");
+                            enableWishFeature();
+                            alert("Reset successful. All wishes have been deleted and the feature is unlocked.");
                         } else {
                             alert("Failed to reset database wishes.");
                         }
@@ -475,7 +464,14 @@ function disableWishFeature() {
     btnIcon.textContent = '🔒';
     btnText.textContent = 'Wish Cast';
     btnWriteWish.style.opacity = '0.7';
-    // We don't remove event listener easily, but the click handler checks the flag
+}
+
+function enableWishFeature() {
+    const btnIcon = btnWriteWish.querySelector('.btn-icon');
+    const btnText = btnWriteWish.querySelector('.btn-text');
+    btnIcon.textContent = '🖊️';
+    btnText.textContent = 'Cast A Wish';
+    btnWriteWish.style.opacity = '1';
 }
 
 function launchWish(text) {
