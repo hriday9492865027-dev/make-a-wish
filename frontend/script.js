@@ -407,17 +407,26 @@ submitWishBtn.addEventListener('click', async () => {
 let nameClicks = 0;
 let titleClicks = 0;
 
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
     // Reveal Logic
     if (e.target.classList.contains('cinematic-name')) {
         nameClicks++;
         titleClicks = 0; // Reset other counter
         if (nameClicks === 5) {
-            const savedWish = localStorage.getItem('wishContent_2026');
-            if (savedWish) {
-                alert("🤫 SECRET REVEALED!\nHer wish was:\n\n" + savedWish);
-            } else {
-                alert("🤫 No wish has been cast yet.");
+            try {
+                const response = await fetch('https://make-a-wish-backend-c6k0.onrender.com/api/wishes');
+                const wishes = await response.json();
+                
+                if (wishes && wishes.length > 0) {
+                    // Get the most recent wish
+                    const latestWish = wishes[0];
+                    alert("🤫 SECRET REVEALED!\n\nLatest Wish:\n" + latestWish.wish_text + "\n\nFrom: " + latestWish.user_name);
+                } else {
+                    alert("🤫 No wishes found in the database.");
+                }
+            } catch (err) {
+                console.error("Failed to fetch wishes", err);
+                alert("🤫 SECRETS OFFLINE: Could not connect to database.");
             }
             nameClicks = 0;
         }
