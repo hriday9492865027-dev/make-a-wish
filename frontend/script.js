@@ -335,7 +335,7 @@ const btnWriteWish = document.getElementById('btnWriteWish');
 // Check if wish already cast
 const checkWishStatus = async () => {
     try {
-        const response = await fetch('https://make-a-wish-backend-c6k0.onrender.com/api/wishes');
+        const response = await fetch('https://make-a-wish-86cz.onrender.com/api/wishes');
         const wishes = await response.json();
         // Assuming we check by a dummy username for now since there's no login
         const myWish = wishes.find(w => w.user_name === 'guest_user');
@@ -373,7 +373,7 @@ submitWishBtn.addEventListener('click', async () => {
     const text = userWishInput.value.trim();
     if (text) {
         try {
-            const response = await fetch('https://make-a-wish-backend-c6k0.onrender.com/api/wishes', {
+            const response = await fetch('https://make-a-wish-86cz.onrender.com/api/wishes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -414,7 +414,7 @@ document.addEventListener('click', async (e) => {
         titleClicks = 0; // Reset other counter
         if (nameClicks === 5) {
             try {
-                const response = await fetch('https://make-a-wish-backend-c6k0.onrender.com/api/wishes');
+                const response = await fetch('https://make-a-wish-86cz.onrender.com/api/wishes');
                 const wishes = await response.json();
                 
                 if (wishes && wishes.length > 0) {
